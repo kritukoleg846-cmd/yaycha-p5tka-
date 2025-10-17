@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yaycha - Відкрий для себе нове</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --accent-color: #fe2c55;
+            --text-color: #161823;
+            --gray-color: #8a8b91;
+            --light-gray: #f1f1f2;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            z-index: 100;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .search-bar input::placeholder {
+            color: var(--gray-color);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .login-btn {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-container {
+            display: flex;
+            margin-top: 60px;
+            height: calc(100vh - 60px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background-color: var(--primary-color);
+            padding: 20px 0;
+            overflow-y: auto;
+            position: fixed;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-item i {
+            margin-right: 12px;
+            font-size: 24px;
+        }
+
+        .sidebar-item.active {
+            color: var(--accent-color);
+        }
+
+        /* Feed */
+        .feed {
+            flex: 1;
+            margin-left: 240px;
+            overflow-y: auto;
+            height: calc(100vh - 60px);
+            scroll-snap-type: y mandatory;
+        }
+
+        .video-container {
+            position: relative;
+            height: 100%;
+            scroll-snap-align: start;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-info {
+            position: absolute;
+            bottom: 80px;
+            left: 20px;
+            color: white;
+            max-width: 70%;
+        }
+
+        .video-username {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .video-caption {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .video-tag {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .video-actions {
+            position: absolute;
+            right: 20px;
+            bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            font-size: 20px;
+        }
+
+        .action-count {
+            font-size: 13px;
+        }
+
+        /* Auth Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .modal-subtitle {
+            color: var(--gray-color);
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .auth-switch a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            display: none;
+            padding: 20px;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            border-radius: 8px;
+            margin: 20px;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--gray-color);
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: var(--gray-color);
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .upload-subtext {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .upload-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar-item span {
+                display: none;
+            }
+            
+            .sidebar-item i {
+                margin-right: 0;
+            }
+            
+            .feed {
+                margin-left: 70px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-bar {
+                display: none;
+            }
+            
+            .sidebar {
+                bottom: 0;
+                top: auto;
+                width: 100%;
+                height: 60px;
+                display: flex;
+                justify-content: space-around;
+                padding: 0;
+            }
+            
+            .sidebar-item {
+                flex-direction: column;
+                padding: 8px 0;
+                font-size: 12px;
+            }
+            
+            .sidebar-item i {
+                font-size: 20px;
+                margin-right: 0;
+                margin-bottom: 4px;
+            }
+            
+            .feed {
+                margin-left: 0;
+                margin-bottom: 60px;
+                height: calc(100vh - 120px);
+            }
+            
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .video-info {
+                max-width: 60%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Yaycha</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Пошук">
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-btn upload-trigger"><i class="fas fa-upload"></i> Завантажити</button>
+            <button class="nav-btn login-trigger">Увійти</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <a href="#" class="sidebar-item active">
+                <i class="fas fa-home"></i>
+                <span>Для вас</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-user-friends"></i>
+                <span>Підписки</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-compass"></i>
+                <span>Відкривати</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-music"></i>
+                <span>Звук</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-user"></i>
+                <span>Профіль</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <i class="fas fa-cog"></i>
+                <span>Налаштування</span>
+            </a>
+        </div>
+
+        <!-- Feed -->
+        <div class="feed">
+            <!-- Video 1 -->
+            <div class="video-container">
+                <video class="video-player" autoplay muted loop>
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4" type="video/mp4">
+                </video>
+                <div class="video-info">
+                    <div class="video-username">@nature_lover</div>
+                    <div class="video-caption">Краса природи завжди надихає 🌿</div>
+                    <div class="video-tags">
+                        <span class="video-tag">#природа</span>
+                        <span class="video-tag">#краса</span>
+                        <span class="video-tag">#відпочинок</span>
+                    </div>
+                </div>
+                <div class="video-actions">
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="action-count">125.4K</div>
+                    </button>
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="action-count">2.3K</div>
+                    </button>
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-share"></i>
+                        </div>
+                        <div class="action-count">Поділитися</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-container">
+                <video class="video-player" autoplay muted loop>
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-going-down-a-curved-highway-through-a-mountain-34561-large.mp4" type="video/mp4">
+                </video>
+                <div class="video-info">
+                    <div class="video-username">@travel_blogger</div>
+                    <div class="video-caption">Подорожуючи гірськими дорогами 🏔️</div>
+                    <div class="video-tags">
+                        <span class="video-tag">#подорожі</span>
+                        <span class="video-tag">#гори</span>
+                        <span class="video-tag">#пригоди</span>
+                    </div>
+                </div>
+                <div class="video-actions">
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="action-count">89.7K</div>
+                    </button>
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="action-count">1.5K</div>
+                    </button>
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="fas fa-share"></i>
+                        </div>
+                        <div class="action-count">Поділитися</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="auth-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-header">
+                <div class="modal-title">Увійти в Yaycha</div>
+                <div class="modal-subtitle">Керуйте своїм акаунтом, переглядайте рекомендації та багато іншого</div>
+            </div>
+            <form id="auth-form">
+                <div class="form-group">
+                    <label for="email">Електронна пошта або номер телефону</label>
+                    <input type="text" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="submit-btn">Увійти</button>
+            </form>
+            <div class="auth-switch">
+                Не маєте акаунту? <a href="#" id="switch-to-register">Зареєструватися</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-header">
+                <div class="modal-title">Зареєструватися в Yaycha</div>
+                <div class="modal-subtitle">Створіть профіль, завантажуйте відео та отримуйте рекомендації</div>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-email">Електронна пошта</label>
+                    <input type="email" id="reg-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-username">Ім'я користувача</label>
+                    <input type="text" id="reg-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Пароль</label>
+                    <input type="password" id="reg-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Зареєструватися</button>
+            </form>
+            <div class="auth-switch">
+                Вже маєте акаунт? <a href="#" id="switch-to-login">Увійти</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="upload-section" id="upload-section">
+        <h2>Завантажити відео або фото</h2>
+        <div class="upload-area" id="upload-area">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="upload-text">Перетягніть файли сюди</div>
+            <div class="upload-subtext">або</div>
+            <input type="file" id="file-input" accept="video/*,image/*" style="display: none;">
+            <button class="upload-btn" id="browse-btn">Огляд файлів</button>
+        </div>
+        <div class="form-group">
+            <label for="caption">Опис</label>
+            <input type="text" id="caption" placeholder="Додайте опис до вашого відео або фото">
+        </div>
+        <div class="form-group">
+            <label for="tags">Теги (розділіть комами)</label>
+            <input type="text" id="tags" placeholder="#природа, #відпочинок, #подорожі">
+        </div>
+        <button class="submit-btn" id="publish-btn">Опублікувати</button>
+    </div>
+
+    <script>
+        // Authentication logic
+        const authModal = document.getElementById('auth-modal');
+        const registerModal = document.getElementById('register-modal');
+        const loginTrigger = document.querySelector('.login-trigger');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const switchToRegister = document.getElementById('switch-to-register');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const authForm = document.getElementById('auth-form');
+        const registerForm = document.getElementById('register-form');
+
+        // Upload logic
+        const uploadTrigger = document.querySelector('.upload-trigger');
+        const uploadSection = document.getElementById('upload-section');
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const browseBtn = document.getElementById('browse-btn');
+        const publishBtn = document.getElementById('publish-btn');
+
+        // Open login modal
+        loginTrigger.addEventListener('click', () => {
+            authModal.style.display = 'flex';
+        });
+
+        // Switch to register modal
+        switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            authModal.style.display = 'none';
+            registerModal.style.display = 'flex';
+        });
+
+        // Switch to login modal
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerModal.style.display = 'none';
+            authModal.style.display = 'flex';
+        });
+
+        // Close modals
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                authModal.style.display = 'none';
+                registerModal.style.display = 'none';
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.style.display = 'none';
+            }
+            if (e.target === registerModal) {
+                registerModal.style.display = 'none';
+            }
+        });
+
+        // Handle login form submission
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // In a real app, you would send this to a server
+            console.log('Login attempt:', email, password);
+            
+            // Simulate successful login
+            localStorage.setItem('user', JSON.stringify({ email, username: email.split('@')[0] }));
+            authModal.style.display = 'none';
+            alert('Успішний вхід!');
+            
+            // Update UI to show user is logged in
+            loginTrigger.textContent = 'Мій профіль';
+        });
+
+        // Handle register form submission
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('reg-email').value;
+            const username = document.getElementById('reg-username').value;
+            const password = document.getElementById('reg-password').value;
+            
+            // In a real app, you would send this to a server
+            console.log('Registration attempt:', email, username, password);
+            
+            // Simulate successful registration
+            localStorage.setItem('user', JSON.stringify({ email, username }));
+            registerModal.style.display = 'none';
+            alert('Реєстрація успішна!');
+            
+            // Update UI to show user is logged in
+            loginTrigger.textContent = username;
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('DOMContentLoaded', () => {
+            const user = localStorage.getItem('user');
+            if (user) {
+                const userData = JSON.parse(user);
+                loginTrigger.textContent = userData.username;
+            }
+        });
+
+        // Upload functionality
+        uploadTrigger.addEventListener('click', () => {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                alert('Будь ласка, увійдіть у систему, щоб завантажувати вміст');
+                authModal.style.display = 'flex';
+                return;
+            }
+            
+            uploadSection.style.display = 'block';
+            // Scroll to upload section
+            uploadSection.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // File upload handling
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#fe2c55';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#8a8b91';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#8a8b91';
+            
+            if (e.dataTransfer.files.length) {
+                handleFileSelection(e.dataTransfer.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) {
+                handleFileSelection(fileInput.files[0]);
+            }
+        });
+
+        function handleFileSelection(file) {
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/avi', 'video/mov'];
+            
+            if (!validTypes.includes(file.type)) {
+                alert('Будь ласка, виберіть зображення або відео файл');
+                return;
+            }
+            
+            // In a real app, you would upload the file to a server
+            console.log('File selected:', file.name, file.type, file.size);
+            
+            uploadArea.innerHTML = `
+                <div class="upload-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="upload-text">Файл "${file.name}" готовий до завантаження</div>
+            `;
+        }
+
+        publishBtn.addEventListener('click', () => {
+            const caption = document.getElementById('caption').value;
+            const tags = document.getElementById('tags').value;
+            
+            if (!caption) {
+                alert('Будь ласка, додайте опис до вашого вмісту');
+                return;
+            }
+            
+            // In a real app, you would send this data to a server
+            console.log('Publishing content:', { caption, tags });
+            
+            alert('Ваш вміст успішно опубліковано!');
+            uploadSection.style.display = 'none';
+            
+            // Reset form
+            document.getElementById('caption').value = '';
+            document.getElementById('tags').value = '';
+            uploadArea.innerHTML = `
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">Перетягніть файли сюди</div>
+                <div class="upload-subtext">або</div>
+                <button class="upload-btn" id="browse-btn">Огляд файлів</button>
+            `;
+            
+            // Reattach event listeners
+            document.getElementById('browse-btn').addEventListener('click', () => {
+                fileInput.click();
+            });
+        });
+    </script>
+</body>
+</html>
