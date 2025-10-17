@@ -19,6 +19,7 @@
             --text-color: #161823;
             --gray-color: #8a8b91;
             --light-gray: #f1f1f2;
+            --dark-gray: #2f3035;
         }
 
         body {
@@ -45,6 +46,7 @@
             font-size: 24px;
             font-weight: 700;
             color: var(--accent-color);
+            cursor: pointer;
         }
 
         .search-bar {
@@ -92,6 +94,18 @@
             color: white;
         }
 
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         /* Main Content */
         .main-container {
             display: flex;
@@ -117,6 +131,7 @@
             text-decoration: none;
             font-size: 18px;
             transition: background-color 0.3s;
+            cursor: pointer;
         }
 
         .sidebar-item:hover {
@@ -145,6 +160,11 @@
             position: relative;
             height: 100%;
             scroll-snap-align: start;
+            display: none;
+        }
+
+        .video-container.active {
+            display: block;
         }
 
         .video-player {
@@ -165,6 +185,7 @@
             font-weight: 700;
             font-size: 18px;
             margin-bottom: 8px;
+            cursor: pointer;
         }
 
         .video-caption {
@@ -271,7 +292,7 @@
             color: var(--gray-color);
         }
 
-        .form-group input {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 12px;
             border-radius: 4px;
@@ -303,6 +324,7 @@
             color: var(--accent-color);
             text-decoration: none;
             font-weight: 600;
+            cursor: pointer;
         }
 
         .close-modal {
@@ -359,6 +381,283 @@
             border-radius: 4px;
             font-size: 16px;
             cursor: pointer;
+        }
+
+        /* Profile Page */
+        .profile-page {
+            display: none;
+            padding: 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .profile-info h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: var(--gray-color);
+            margin-bottom: 10px;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .content-item {
+            aspect-ratio: 9/16;
+            background-color: var(--dark-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .content-item video, .content-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Messages Page */
+        .messages-page {
+            display: none;
+            padding: 20px;
+        }
+
+        .messages-container {
+            display: flex;
+            height: calc(100vh - 140px);
+        }
+
+        .conversations-list {
+            width: 300px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+        }
+
+        .conversation-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .conversation-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .conversation-info {
+            flex: 1;
+        }
+
+        .conversation-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .conversation-preview {
+            color: var(--gray-color);
+            font-size: 14px;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 70%;
+        }
+
+        .message.received {
+            align-self: flex-start;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .message-bubble {
+            padding: 10px 15px;
+            border-radius: 18px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .message.sent .message-bubble {
+            background-color: var(--accent-color);
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .chat-input button {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        /* Settings Page */
+        .settings-page {
+            display: none;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        .settings-section {
+            margin-bottom: 30px;
+        }
+
+        .settings-section h2 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .settings-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .select-option {
+            padding: 8px 12px;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--secondary-color);
         }
 
         /* Responsive Design */
@@ -420,6 +719,17 @@
             .video-info {
                 max-width: 60%;
             }
+
+            .messages-container {
+                flex-direction: column;
+            }
+
+            .conversations-list {
+                width: 100%;
+                height: 200px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -427,13 +737,14 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">Yaycha</div>
+        <div class="logo" id="home-btn">Yaycha</div>
         <div class="search-bar">
-            <input type="text" placeholder="Пошук">
+            <input type="text" placeholder="Пошук" id="search-input">
         </div>
         <div class="nav-buttons">
             <button class="nav-btn upload-trigger"><i class="fas fa-upload"></i> Завантажити</button>
-            <button class="nav-btn login-trigger">Увійти</button>
+            <button class="nav-btn login-trigger" id="login-btn">Увійти</button>
+            <div class="user-avatar" id="user-avatar" style="display: none;"></div>
         </div>
     </header>
 
@@ -441,105 +752,251 @@
     <div class="main-container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <a href="#" class="sidebar-item active">
+            <div class="sidebar-item active" data-page="home">
                 <i class="fas fa-home"></i>
                 <span>Для вас</span>
-            </a>
-            <a href="#" class="sidebar-item">
+            </div>
+            <div class="sidebar-item" data-page="following">
                 <i class="fas fa-user-friends"></i>
                 <span>Підписки</span>
-            </a>
-            <a href="#" class="sidebar-item">
+            </div>
+            <div class="sidebar-item" data-page="discover">
                 <i class="fas fa-compass"></i>
                 <span>Відкривати</span>
-            </a>
-            <a href="#" class="sidebar-item">
-                <i class="fas fa-music"></i>
-                <span>Звук</span>
-            </a>
-            <a href="#" class="sidebar-item">
+            </div>
+            <div class="sidebar-item" data-page="messages">
+                <i class="fas fa-comment"></i>
+                <span>Повідомлення</span>
+            </div>
+            <div class="sidebar-item" data-page="profile">
                 <i class="fas fa-user"></i>
                 <span>Профіль</span>
-            </a>
-            <a href="#" class="sidebar-item">
+            </div>
+            <div class="sidebar-item" data-page="settings">
                 <i class="fas fa-cog"></i>
                 <span>Налаштування</span>
-            </a>
+            </div>
         </div>
 
-        <!-- Feed -->
-        <div class="feed">
-            <!-- Video 1 -->
-            <div class="video-container">
-                <video class="video-player" autoplay muted loop>
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4" type="video/mp4">
-                </video>
-                <div class="video-info">
-                    <div class="video-username">@nature_lover</div>
-                    <div class="video-caption">Краса природи завжди надихає 🌿</div>
-                    <div class="video-tags">
-                        <span class="video-tag">#природа</span>
-                        <span class="video-tag">#краса</span>
-                        <span class="video-tag">#відпочинок</span>
+        <!-- Home Feed -->
+        <div class="feed" id="home-feed">
+            <!-- Videos will be dynamically added here -->
+        </div>
+
+        <!-- Following Feed -->
+        <div class="feed" id="following-feed" style="display: none;">
+            <div style="padding: 20px; text-align: center;">
+                <h2>Підписки</h2>
+                <p style="margin-top: 20px; color: var(--gray-color);">Тут будуть відео від авторів, на яких ви підписані</p>
+            </div>
+        </div>
+
+        <!-- Discover Feed -->
+        <div class="feed" id="discover-feed" style="display: none;">
+            <div style="padding: 20px; text-align: center;">
+                <h2>Відкривати</h2>
+                <p style="margin-top: 20px; color: var(--gray-color);">Тут будуть відео для відкриття нового контенту</p>
+            </div>
+        </div>
+
+        <!-- Messages Page -->
+        <div class="messages-page" id="messages-page">
+            <h2 style="margin-bottom: 20px;">Повідомлення</h2>
+            <div class="messages-container">
+                <div class="conversations-list" id="conversations-list">
+                    <!-- Conversations will be dynamically added here -->
+                </div>
+                <div class="chat-container">
+                    <div class="chat-header" id="chat-header">
+                        <div class="conversation-avatar" id="chat-avatar">U</div>
+                        <div class="conversation-info">
+                            <div class="conversation-name" id="chat-name">Оберіть чат</div>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div style="text-align: center; color: var(--gray-color); padding: 20px;">
+                            Оберіть чат, щоб почати спілкування
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Повідомлення..." id="message-input" disabled>
+                        <button id="send-message-btn" disabled><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
-                <div class="video-actions">
-                    <button class="action-btn">
-                        <div class="action-icon">
-                            <i class="fas fa-heart"></i>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div class="profile-page" id="profile-page">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profile-avatar">U</div>
+                <div class="profile-info">
+                    <h1 id="profile-username">Користувач</h1>
+                    <p id="profile-bio">Біо відсутнє</p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value" id="profile-following">0</div>
+                            <div class="stat-label">Підписки</div>
                         </div>
-                        <div class="action-count">125.4K</div>
-                    </button>
-                    <button class="action-btn">
-                        <div class="action-icon">
-                            <i class="fas fa-comment"></i>
+                        <div class="stat">
+                            <div class="stat-value" id="profile-followers">0</div>
+                            <div class="stat-label">Підписники</div>
                         </div>
-                        <div class="action-count">2.3K</div>
-                    </button>
-                    <button class="action-btn">
-                        <div class="action-icon">
-                            <i class="fas fa-share"></i>
+                        <div class="stat">
+                            <div class="stat-value" id="profile-likes">0</div>
+                            <div class="stat-label">Вподобання</div>
                         </div>
-                        <div class="action-count">Поділитися</div>
-                    </button>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-content" id="profile-content">
+                <!-- User content will be dynamically added here -->
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div class="settings-page" id="settings-page">
+            <h1 style="margin-bottom: 20px;">Налаштування</h1>
+            
+            <div class="settings-section">
+                <h2>Акаунт</h2>
+                <div class="settings-item">
+                    <div>Редагувати профіль</div>
+                    <button class="nav-btn" id="edit-profile-btn">Редагувати</button>
+                </div>
+                <div class="settings-item">
+                    <div>Змінити пароль</div>
+                    <button class="nav-btn">Змінити</button>
+                </div>
+                <div class="settings-item">
+                    <div>Двомовна аутентифікація</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
                 </div>
             </div>
 
-            <!-- Video 2 -->
-            <div class="video-container">
-                <video class="video-player" autoplay muted loop>
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-going-down-a-curved-highway-through-a-mountain-34561-large.mp4" type="video/mp4">
-                </video>
-                <div class="video-info">
-                    <div class="video-username">@travel_blogger</div>
-                    <div class="video-caption">Подорожуючи гірськими дорогами 🏔️</div>
-                    <div class="video-tags">
-                        <span class="video-tag">#подорожі</span>
-                        <span class="video-tag">#гори</span>
-                        <span class="video-tag">#пригоди</span>
-                    </div>
+            <div class="settings-section">
+                <h2>Конфіденційність</h2>
+                <div class="settings-item">
+                    <div>Приватний акаунт</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
                 </div>
-                <div class="video-actions">
-                    <button class="action-btn">
-                        <div class="action-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="action-count">89.7K</div>
-                    </button>
-                    <button class="action-btn">
-                        <div class="action-icon">
-                            <i class="fas fa-comment"></i>
-                        </div>
-                        <div class="action-count">1.5K</div>
-                    </button>
-                    <button class="action-btn">
-                        <div class="action-icon">
-                            <i class="fas fa-share"></i>
-                        </div>
-                        <div class="action-count">Поділитися</div>
-                    </button>
+                <div class="settings-item">
+                    <div>Коментарі</div>
+                    <select class="select-option">
+                        <option>Всі можуть коментувати</option>
+                        <option>Тільки друзі</option>
+                        <option>Ніхто</option>
+                    </select>
+                </div>
+                <div class="settings-item">
+                    <div>Прямі повідомлення</div>
+                    <select class="select-option">
+                        <option>Всі можуть писати</option>
+                        <option>Тільки друзі</option>
+                        <option>Ніхто</option>
+                    </select>
                 </div>
             </div>
+
+            <div class="settings-section">
+                <h2>Сповіщення</h2>
+                <div class="settings-item">
+                    <div>Push-сповіщення</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <div>Електронні листи</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <div>Вподобання</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h2>Додатково</h2>
+                <div class="settings-item">
+                    <div>Мова</div>
+                    <select class="select-option">
+                        <option>Українська</option>
+                        <option>English</option>
+                        <option>Русский</option>
+                    </select>
+                </div>
+                <div class="settings-item">
+                    <div>Автовідтворення відео</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <div>Темний режим</div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h2>Підтримка</h2>
+                <div class="settings-item">
+                    <div>Допомога</div>
+                    <button class="nav-btn">Перейти</button>
+                </div>
+                <div class="settings-item">
+                    <div>Звіт про проблему</div>
+                    <button class="nav-btn">Створити</button>
+                </div>
+                <div class="settings-item">
+                    <div>Умови використання</div>
+                    <button class="nav-btn">Переглянути</button>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <button class="submit-btn" id="logout-btn" style="background-color: #ff4757;">Вийти з акаунту</button>
+            </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="upload-section">
+            <h2>Завантажити відео або фото</h2>
+            <div class="upload-area" id="upload-area">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">Перетягніть файли сюди</div>
+                <div class="upload-subtext">або</div>
+                <input type="file" id="file-input" accept="video/*,image/*" style="display: none;">
+                <button class="upload-btn" id="browse-btn">Огляд файлів</button>
+            </div>
+            <div class="form-group">
+                <label for="caption">Опис</label>
+                <input type="text" id="caption" placeholder="Додайте опис до вашого відео або фото">
+            </div>
+            <div class="form-group">
+                <label for="tags">Теги (розділіть комами)</label>
+                <input type="text" id="tags" placeholder="#природа, #відпочинок, #подорожі">
+            </div>
+            <button class="submit-btn" id="publish-btn">Опублікувати</button>
         </div>
     </div>
 
@@ -597,41 +1054,51 @@
         </div>
     </div>
 
-    <!-- Upload Section -->
-    <div class="upload-section" id="upload-section">
-        <h2>Завантажити відео або фото</h2>
-        <div class="upload-area" id="upload-area">
-            <div class="upload-icon">
-                <i class="fas fa-cloud-upload-alt"></i>
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="edit-profile-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-header">
+                <div class="modal-title">Редагувати профіль</div>
             </div>
-            <div class="upload-text">Перетягніть файли сюди</div>
-            <div class="upload-subtext">або</div>
-            <input type="file" id="file-input" accept="video/*,image/*" style="display: none;">
-            <button class="upload-btn" id="browse-btn">Огляд файлів</button>
+            <form id="edit-profile-form">
+                <div class="form-group">
+                    <label for="edit-username">Ім'я користувача</label>
+                    <input type="text" id="edit-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-bio">Біо</label>
+                    <textarea id="edit-bio" rows="3"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Зберегти зміни</button>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="caption">Опис</label>
-            <input type="text" id="caption" placeholder="Додайте опис до вашого відео або фото">
-        </div>
-        <div class="form-group">
-            <label for="tags">Теги (розділіть комами)</label>
-            <input type="text" id="tags" placeholder="#природа, #відпочинок, #подорожі">
-        </div>
-        <button class="submit-btn" id="publish-btn">Опублікувати</button>
     </div>
 
     <script>
-        // Authentication logic
+        // Data storage
+        let users = JSON.parse(localStorage.getItem('yaycha_users')) || [];
+        let posts = JSON.parse(localStorage.getItem('yaycha_posts')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('yaycha_current_user')) || null;
+        let conversations = JSON.parse(localStorage.getItem('yaycha_conversations')) || [];
+
+        // DOM Elements
         const authModal = document.getElementById('auth-modal');
         const registerModal = document.getElementById('register-modal');
-        const loginTrigger = document.querySelector('.login-trigger');
+        const editProfileModal = document.getElementById('edit-profile-modal');
+        const loginTrigger = document.getElementById('login-btn');
+        const userAvatar = document.getElementById('user-avatar');
         const closeModalButtons = document.querySelectorAll('.close-modal');
         const switchToRegister = document.getElementById('switch-to-register');
         const switchToLogin = document.getElementById('switch-to-login');
         const authForm = document.getElementById('auth-form');
         const registerForm = document.getElementById('register-form');
+        const editProfileForm = document.getElementById('edit-profile-form');
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const homeBtn = document.getElementById('home-btn');
 
-        // Upload logic
+        // Upload elements
         const uploadTrigger = document.querySelector('.upload-trigger');
         const uploadSection = document.getElementById('upload-section');
         const uploadArea = document.getElementById('upload-area');
@@ -639,7 +1106,407 @@
         const browseBtn = document.getElementById('browse-btn');
         const publishBtn = document.getElementById('publish-btn');
 
-        // Open login modal
+        // Page elements
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const homeFeed = document.getElementById('home-feed');
+        const followingFeed = document.getElementById('following-feed');
+        const discoverFeed = document.getElementById('discover-feed');
+        const messagesPage = document.getElementById('messages-page');
+        const profilePage = document.getElementById('profile-page');
+        const settingsPage = document.getElementById('settings-page');
+
+        // Messages elements
+        const conversationsList = document.getElementById('conversations-list');
+        const chatMessages = document.getElementById('chat-messages');
+        const messageInput = document.getElementById('message-input');
+        const sendMessageBtn = document.getElementById('send-message-btn');
+        const chatHeader = document.getElementById('chat-header');
+        const chatAvatar = document.getElementById('chat-avatar');
+        const chatName = document.getElementById('chat-name');
+
+        // Profile elements
+        const profileAvatar = document.getElementById('profile-avatar');
+        const profileUsername = document.getElementById('profile-username');
+        const profileBio = document.getElementById('profile-bio');
+        const profileFollowing = document.getElementById('profile-following');
+        const profileFollowers = document.getElementById('profile-followers');
+        const profileLikes = document.getElementById('profile-likes');
+        const profileContent = document.getElementById('profile-content');
+
+        // Initialize the app
+        function initApp() {
+            // Check if user is logged in
+            if (currentUser) {
+                updateUIForLoggedInUser();
+            }
+
+            // Load initial content
+            loadHomeFeed();
+            loadConversations();
+            loadProfile();
+
+            // Add sample data if needed
+            if (posts.length === 0) {
+                createSamplePosts();
+            }
+
+            if (users.length === 0) {
+                createSampleUsers();
+            }
+
+            if (conversations.length === 0) {
+                createSampleConversations();
+            }
+        }
+
+        // Create sample posts
+        function createSamplePosts() {
+            const samplePosts = [
+                {
+                    id: 1,
+                    username: 'travel_blogger',
+                    caption: 'Подорожуючи гірськими дорогами 🏔️',
+                    tags: ['#подорожі', '#гори', '#пригоди'],
+                    likes: 89700,
+                    comments: 1500,
+                    type: 'video',
+                    url: 'https://assets.mixkit.co/videos/preview/mixkit-going-down-a-curved-highway-through-a-mountain-34561-large.mp4'
+                },
+                {
+                    id: 2,
+                    username: 'nature_lover',
+                    caption: 'Краса природи завжди надихає 🌿',
+                    tags: ['#природа', '#краса', '#відпочинок'],
+                    likes: 125400,
+                    comments: 2300,
+                    type: 'video',
+                    url: 'https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4'
+                },
+                {
+                    id: 3,
+                    username: 'cooking_master',
+                    caption: 'Смачний обід за 15 хвилин! 🍝',
+                    tags: ['#кулінарія', '#рецепт', '#їжа'],
+                    likes: 54300,
+                    comments: 870,
+                    type: 'video',
+                    url: 'https://assets.mixkit.co/videos/preview/mixkit-woman-preparing-a-salad-in-the-kitchen-41554-large.mp4'
+                }
+            ];
+
+            posts = samplePosts;
+            localStorage.setItem('yaycha_posts', JSON.stringify(posts));
+        }
+
+        // Create sample users
+        function createSampleUsers() {
+            const sampleUsers = [
+                {
+                    id: 1,
+                    email: 'user@example.com',
+                    username: 'travel_blogger',
+                    password: 'password123',
+                    bio: 'Мандрівник та фотограф',
+                    following: 45,
+                    followers: 12400,
+                    likes: 543200
+                },
+                {
+                    id: 2,
+                    email: 'nature@example.com',
+                    username: 'nature_lover',
+                    password: 'password123',
+                    bio: 'Люблю природу та тварин',
+                    following: 32,
+                    followers: 87600,
+                    likes: 1205400
+                },
+                {
+                    id: 3,
+                    email: 'cook@example.com',
+                    username: 'cooking_master',
+                    password: 'password123',
+                    bio: 'Шеф-кухар з 10-річним досвідом',
+                    following: 67,
+                    followers: 54300,
+                    likes: 876500
+                }
+            ];
+
+            users = sampleUsers;
+            localStorage.setItem('yaycha_users', JSON.stringify(users));
+        }
+
+        // Create sample conversations
+        function createSampleConversations() {
+            const sampleConversations = [
+                {
+                    id: 1,
+                    userId: 1,
+                    username: 'travel_blogger',
+                    messages: [
+                        { text: 'Привіт! Тобі сподобалося моє останнє відео?', sender: 'them', time: new Date(Date.now() - 3600000) },
+                        { text: 'Так, воно неймовірне! Де це було знято?', sender: 'me', time: new Date(Date.now() - 3500000) },
+                        { text: 'В Карпатах, біля Говерли', sender: 'them', time: new Date(Date.now() - 3400000) }
+                    ]
+                },
+                {
+                    id: 2,
+                    userId: 2,
+                    username: 'nature_lover',
+                    messages: [
+                        { text: 'Привіт! Бачив твої фото природи - дуже гарно!', sender: 'them', time: new Date(Date.now() - 86400000) },
+                        { text: 'Дякую! Я знімав у ботанічному саду', sender: 'me', time: new Date(Date.now() - 86000000) }
+                    ]
+                }
+            ];
+
+            conversations = sampleConversations;
+            localStorage.setItem('yaycha_conversations', JSON.stringify(conversations));
+        }
+
+        // Load home feed with posts
+        function loadHomeFeed() {
+            homeFeed.innerHTML = '';
+            
+            posts.forEach(post => {
+                const videoContainer = document.createElement('div');
+                videoContainer.className = 'video-container active';
+                
+                videoContainer.innerHTML = `
+                    <video class="video-player" autoplay muted loop>
+                        <source src="${post.url}" type="video/mp4">
+                    </video>
+                    <div class="video-info">
+                        <div class="video-username">@${post.username}</div>
+                        <div class="video-caption">${post.caption}</div>
+                        <div class="video-tags">
+                            ${post.tags.map(tag => `<span class="video-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="video-actions">
+                        <button class="action-btn" onclick="likePost(${post.id})">
+                            <div class="action-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="action-count">${formatNumber(post.likes)}</div>
+                        </button>
+                        <button class="action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-comment"></i>
+                            </div>
+                            <div class="action-count">${formatNumber(post.comments)}</div>
+                        </button>
+                        <button class="action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-share"></i>
+                            </div>
+                            <div class="action-count">Поділитися</div>
+                        </button>
+                    </div>
+                `;
+                
+                homeFeed.appendChild(videoContainer);
+            });
+        }
+
+        // Format large numbers
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        // Like a post
+        function likePost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                post.likes += 1;
+                localStorage.setItem('yaycha_posts', JSON.stringify(posts));
+                loadHomeFeed();
+            }
+        }
+
+        // Load conversations
+        function loadConversations() {
+            conversationsList.innerHTML = '';
+            
+            conversations.forEach(conversation => {
+                const user = users.find(u => u.id === conversation.userId);
+                if (user) {
+                    const lastMessage = conversation.messages[conversation.messages.length - 1];
+                    
+                    const conversationItem = document.createElement('div');
+                    conversationItem.className = 'conversation-item';
+                    conversationItem.innerHTML = `
+                        <div class="conversation-avatar">${user.username.charAt(0).toUpperCase()}</div>
+                        <div class="conversation-info">
+                            <div class="conversation-name">${user.username}</div>
+                            <div class="conversation-preview">${lastMessage.text}</div>
+                        </div>
+                    `;
+                    
+                    conversationItem.addEventListener('click', () => openChat(conversation.id));
+                    conversationsList.appendChild(conversationItem);
+                }
+            });
+        }
+
+        // Open chat
+        function openChat(conversationId) {
+            const conversation = conversations.find(c => c.id === conversationId);
+            if (!conversation) return;
+            
+            const user = users.find(u => u.id === conversation.userId);
+            if (!user) return;
+            
+            // Update chat header
+            chatAvatar.textContent = user.username.charAt(0).toUpperCase();
+            chatName.textContent = user.username;
+            
+            // Enable message input
+            messageInput.disabled = false;
+            sendMessageBtn.disabled = false;
+            
+            // Load messages
+            chatMessages.innerHTML = '';
+            conversation.messages.forEach(message => {
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${message.sender}`;
+                
+                const time = new Date(message.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                messageElement.innerHTML = `
+                    <div class="message-bubble">${message.text}</div>
+                    <div style="font-size: 12px; color: var(--gray-color); margin-top: 5px;">${time}</div>
+                `;
+                
+                chatMessages.appendChild(messageElement);
+            });
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Send message
+        function sendMessage() {
+            const messageText = messageInput.value.trim();
+            if (!messageText) return;
+            
+            const activeConversationId = conversations.find(c => 
+                c.username === chatName.textContent
+            )?.id;
+            
+            if (!activeConversationId) return;
+            
+            const conversation = conversations.find(c => c.id === activeConversationId);
+            if (!conversation) return;
+            
+            // Add new message
+            conversation.messages.push({
+                text: messageText,
+                sender: 'me',
+                time: new Date()
+            });
+            
+            // Save to localStorage
+            localStorage.setItem('yaycha_conversations', JSON.stringify(conversations));
+            
+            // Reload chat
+            openChat(activeConversationId);
+            
+            // Clear input
+            messageInput.value = '';
+        }
+
+        // Load profile
+        function loadProfile() {
+            if (!currentUser) return;
+            
+            const user = users.find(u => u.id === currentUser.id);
+            if (!user) return;
+            
+            profileAvatar.textContent = user.username.charAt(0).toUpperCase();
+            profileUsername.textContent = user.username;
+            profileBio.textContent = user.bio || 'Біо відсутнє';
+            profileFollowing.textContent = user.following || 0;
+            profileFollowers.textContent = user.followers || 0;
+            profileLikes.textContent = formatNumber(user.likes || 0);
+            
+            // Load user posts
+            profileContent.innerHTML = '';
+            const userPosts = posts.filter(p => p.username === user.username);
+            
+            userPosts.forEach(post => {
+                const contentItem = document.createElement('div');
+                contentItem.className = 'content-item';
+                
+                if (post.type === 'video') {
+                    contentItem.innerHTML = `<video src="${post.url}" muted loop></video>`;
+                } else {
+                    contentItem.innerHTML = `<img src="${post.url}" alt="Post">`;
+                }
+                
+                profileContent.appendChild(contentItem);
+            });
+        }
+
+        // Update UI for logged in user
+        function updateUIForLoggedInUser() {
+            loginTrigger.style.display = 'none';
+            userAvatar.style.display = 'flex';
+            userAvatar.textContent = currentUser.username.charAt(0).toUpperCase();
+        }
+
+        // Switch between pages
+        function switchPage(pageName) {
+            // Hide all pages
+            homeFeed.style.display = 'none';
+            followingFeed.style.display = 'none';
+            discoverFeed.style.display = 'none';
+            messagesPage.style.display = 'none';
+            profilePage.style.display = 'none';
+            settingsPage.style.display = 'none';
+            uploadSection.style.display = 'none';
+            
+            // Show selected page
+            switch(pageName) {
+                case 'home':
+                    homeFeed.style.display = 'block';
+                    break;
+                case 'following':
+                    followingFeed.style.display = 'block';
+                    break;
+                case 'discover':
+                    discoverFeed.style.display = 'block';
+                    break;
+                case 'messages':
+                    messagesPage.style.display = 'block';
+                    break;
+                case 'profile':
+                    profilePage.style.display = 'block';
+                    loadProfile();
+                    break;
+                case 'settings':
+                    settingsPage.style.display = 'block';
+                    break;
+            }
+            
+            // Update active sidebar item
+            sidebarItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') === pageName) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        // Auth modal
         loginTrigger.addEventListener('click', () => {
             authModal.style.display = 'flex';
         });
@@ -663,17 +1530,15 @@
             button.addEventListener('click', () => {
                 authModal.style.display = 'none';
                 registerModal.style.display = 'none';
+                editProfileModal.style.display = 'none';
             });
         });
 
         // Close modals when clicking outside
         window.addEventListener('click', (e) => {
-            if (e.target === authModal) {
-                authModal.style.display = 'none';
-            }
-            if (e.target === registerModal) {
-                registerModal.style.display = 'none';
-            }
+            if (e.target === authModal) authModal.style.display = 'none';
+            if (e.target === registerModal) registerModal.style.display = 'none';
+            if (e.target === editProfileModal) editProfileModal.style.display = 'none';
         });
 
         // Handle login form submission
@@ -682,16 +1547,17 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            // In a real app, you would send this to a server
-            console.log('Login attempt:', email, password);
+            const user = users.find(u => u.email === email && u.password === password);
             
-            // Simulate successful login
-            localStorage.setItem('user', JSON.stringify({ email, username: email.split('@')[0] }));
-            authModal.style.display = 'none';
-            alert('Успішний вхід!');
-            
-            // Update UI to show user is logged in
-            loginTrigger.textContent = 'Мій профіль';
+            if (user) {
+                currentUser = { id: user.id, username: user.username };
+                localStorage.setItem('yaycha_current_user', JSON.stringify(currentUser));
+                authModal.style.display = 'none';
+                updateUIForLoggedInUser();
+                loadProfile();
+            } else {
+                alert('Невірний email або пароль');
+            }
         });
 
         // Handle register form submission
@@ -701,38 +1567,126 @@
             const username = document.getElementById('reg-username').value;
             const password = document.getElementById('reg-password').value;
             
-            // In a real app, you would send this to a server
-            console.log('Registration attempt:', email, username, password);
+            // Check if user already exists
+            if (users.find(u => u.email === email)) {
+                alert('Користувач з таким email вже існує');
+                return;
+            }
             
-            // Simulate successful registration
-            localStorage.setItem('user', JSON.stringify({ email, username }));
+            if (users.find(u => u.username === username)) {
+                alert('Користувач з таким іменем вже існує');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: users.length + 1,
+                email,
+                username,
+                password,
+                bio: '',
+                following: 0,
+                followers: 0,
+                likes: 0
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('yaycha_users', JSON.stringify(users));
+            
+            // Log in the new user
+            currentUser = { id: newUser.id, username: newUser.username };
+            localStorage.setItem('yaycha_current_user', JSON.stringify(currentUser));
+            
             registerModal.style.display = 'none';
-            alert('Реєстрація успішна!');
+            updateUIForLoggedInUser();
+            loadProfile();
             
-            // Update UI to show user is logged in
-            loginTrigger.textContent = username;
+            alert('Реєстрація успішна!');
         });
 
-        // Check if user is already logged in
-        window.addEventListener('DOMContentLoaded', () => {
-            const user = localStorage.getItem('user');
-            if (user) {
-                const userData = JSON.parse(user);
-                loginTrigger.textContent = userData.username;
+        // Handle edit profile form
+        editProfileBtn.addEventListener('click', () => {
+            if (!currentUser) return;
+            
+            const user = users.find(u => u.id === currentUser.id);
+            if (!user) return;
+            
+            document.getElementById('edit-username').value = user.username;
+            document.getElementById('edit-bio').value = user.bio || '';
+            
+            editProfileModal.style.display = 'flex';
+        });
+
+        editProfileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('edit-username').value;
+            const bio = document.getElementById('edit-bio').value;
+            
+            if (!currentUser) return;
+            
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex === -1) return;
+            
+            // Check if username is already taken
+            if (username !== users[userIndex].username && users.find(u => u.username === username)) {
+                alert('Користувач з таким іменем вже існує');
+                return;
             }
+            
+            // Update user
+            users[userIndex].username = username;
+            users[userIndex].bio = bio;
+            
+            // Update current user
+            currentUser.username = username;
+            
+            // Save to localStorage
+            localStorage.setItem('yaycha_users', JSON.stringify(users));
+            localStorage.setItem('yaycha_current_user', JSON.stringify(currentUser));
+            
+            // Update UI
+            userAvatar.textContent = username.charAt(0).toUpperCase();
+            loadProfile();
+            
+            editProfileModal.style.display = 'none';
+            alert('Профіль оновлено!');
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', () => {
+            currentUser = null;
+            localStorage.removeItem('yaycha_current_user');
+            
+            userAvatar.style.display = 'none';
+            loginTrigger.style.display = 'block';
+            
+            switchPage('home');
+            alert('Ви вийшли з акаунту');
+        });
+
+        // Home button
+        homeBtn.addEventListener('click', () => {
+            switchPage('home');
+        });
+
+        // Sidebar navigation
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const page = item.getAttribute('data-page');
+                switchPage(page);
+            });
         });
 
         // Upload functionality
         uploadTrigger.addEventListener('click', () => {
-            const user = localStorage.getItem('user');
-            if (!user) {
+            if (!currentUser) {
                 alert('Будь ласка, увійдіть у систему, щоб завантажувати вміст');
                 authModal.style.display = 'flex';
                 return;
             }
             
+            switchPage('home');
             uploadSection.style.display = 'block';
-            // Scroll to upload section
             uploadSection.scrollIntoView({ behavior: 'smooth' });
         });
 
@@ -774,27 +1728,57 @@
             }
             
             // In a real app, you would upload the file to a server
-            console.log('File selected:', file.name, file.type, file.size);
+            // For this demo, we'll create a local URL
+            const fileURL = URL.createObjectURL(file);
             
             uploadArea.innerHTML = `
                 <div class="upload-icon">
                     <i class="fas fa-check"></i>
                 </div>
                 <div class="upload-text">Файл "${file.name}" готовий до завантаження</div>
+                <div style="margin-top: 10px;">
+                    ${file.type.startsWith('video') ? 
+                        `<video src="${fileURL}" style="max-width: 200px; max-height: 200px;" controls></video>` : 
+                        `<img src="${fileURL}" style="max-width: 200px; max-height: 200px;">`}
+                </div>
             `;
+            
+            // Store the file URL for publishing
+            uploadArea.dataset.fileUrl = fileURL;
+            uploadArea.dataset.fileType = file.type.startsWith('video') ? 'video' : 'image';
         }
 
+        // Publish post
         publishBtn.addEventListener('click', () => {
             const caption = document.getElementById('caption').value;
             const tags = document.getElementById('tags').value;
+            const fileURL = uploadArea.dataset.fileUrl;
+            const fileType = uploadArea.dataset.fileType;
+            
+            if (!fileURL) {
+                alert('Будь ласка, виберіть файл для завантаження');
+                return;
+            }
             
             if (!caption) {
                 alert('Будь ласка, додайте опис до вашого вмісту');
                 return;
             }
             
-            // In a real app, you would send this data to a server
-            console.log('Publishing content:', { caption, tags });
+            // Create new post
+            const newPost = {
+                id: posts.length + 1,
+                username: currentUser.username,
+                caption,
+                tags: tags.split(',').map(tag => tag.trim()),
+                likes: 0,
+                comments: 0,
+                type: fileType,
+                url: fileURL
+            };
+            
+            posts.push(newPost);
+            localStorage.setItem('yaycha_posts', JSON.stringify(posts));
             
             alert('Ваш вміст успішно опубліковано!');
             uploadSection.style.display = 'none';
@@ -810,12 +1794,30 @@
                 <div class="upload-subtext">або</div>
                 <button class="upload-btn" id="browse-btn">Огляд файлів</button>
             `;
+            delete uploadArea.dataset.fileUrl;
+            delete uploadArea.dataset.fileType;
             
             // Reattach event listeners
             document.getElementById('browse-btn').addEventListener('click', () => {
                 fileInput.click();
             });
+            
+            // Reload home feed
+            loadHomeFeed();
         });
+
+        // Send message on button click
+        sendMessageBtn.addEventListener('click', sendMessage);
+
+        // Send message on Enter key
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initialize with home page
+        switchPage('home');
     </script>
 </body>
 </html>
